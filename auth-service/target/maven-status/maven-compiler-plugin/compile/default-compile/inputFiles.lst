@@ -1,0 +1,17 @@
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/AuthServiceApplication.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/migration/V1__init_users.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/security/SecurityConfig.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/controller/AuthController.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/config/AppConfig.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/dto/AuthResponse.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/repository/UserRepository.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/event/producer/NotificationProducer.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/model/User.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/service/AuthService.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/dto/RegisterRequest.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/event/consumer/KafkaProducerConfig.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/service/JwtService.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/dto/LoginRequest.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/config/MongockConfig.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/security/JwtAuthenticationFilter.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/migration/V2__seed_admin.java

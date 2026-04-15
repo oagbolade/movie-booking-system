@@ -1,0 +1,11 @@
+com/platform/catalogue/dto/MovieResponse$MovieResponseBuilder.class
+com/platform/catalogue/migration/V2__seed_movies.class
+com/platform/catalogue/model/Movie.class
+com/platform/catalogue/controller/MovieController.class
+com/platform/catalogue/service/MovieService.class
+com/platform/catalogue/repository/MovieRepository.class
+com/platform/catalogue/CatalogueServiceApplication.class
+com/platform/catalogue/model/Movie$MovieBuilder.class
+com/platform/catalogue/dto/MovieResponse.class
+com/platform/catalogue/dto/MovieRequest.class
+com/platform/catalogue/migration/V1__init_movies.class

@@ -1,0 +1,195 @@
+version: "3.9"
+
+services:
+
+  # =======================
+  # EUREKA SERVER (Start First)
+  # =======================
+  eureka-server:
+    build:
+      context: .
+      dockerfile: eureka-server/Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/eureka/apps"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # =======================
+  # MONGODB
+  # =======================
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  # =======================
+  # KAFKA + ZOOKEEPER
+  # =======================
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+  # =======================
+  # AUTH SERVICE
+  # =======================
+  auth-service:
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    container_name: auth-service
+    depends_on:
+      mongodb:
+        condition: service_started
+      kafka:
+        condition: service_started
+      eureka-server:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/authdb
+      JWT_SECRET: your-secret-key
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+
+   # =======================
+   # CATALOGUE SERVICE
+   # =======================
+  catalogue-service:
+    build:
+       context: .
+       dockerfile: catalogue-service/Dockerfile
+    container_name: catalogue-service
+    depends_on:
+      mongodb:
+        condition: service_started
+      kafka:
+        condition: service_started
+      eureka-server:
+        condition: service_healthy
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/cataloguedb
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+
+   # =======================
+   # TICKET SERVICE
+   # =======================
+  ticket-service:
+    build:
+       context: .
+       dockerfile: ticket-service/Dockerfile
+    container_name: ticket-service
+    depends_on:
+      mongodb:
+        condition: service_started
+      kafka:
+        condition: service_started
+      eureka-server:
+        condition: service_healthy
+    ports:
+      - "8083:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/ticketdb
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+
+   # =======================
+   # PAYMENT SERVICE
+   # =======================
+  payment-service:
+    build:
+       context: .
+       dockerfile: payment-service/Dockerfile
+    container_name: payment-service
+    depends_on:
+      mongodb:
+        condition: service_started
+      kafka:
+        condition: service_started
+      eureka-server:
+        condition: service_healthy
+    ports:
+      - "8084:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/paymentdb
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+
+  # =======================
+  # NOTIFICATION SERVICE
+  # =======================
+  notification-service:
+    build:
+      context: .
+      dockerfile: notification-service/Dockerfile
+    container_name: notification-service
+    depends_on:
+      - kafka
+    ports:
+      - "8085:8085"
+
+   # =======================
+   # API GATEWAY
+   # =======================
+  api-gateway:
+    build:
+       context: .
+       dockerfile: api-gateway/Dockerfile
+    container_name: api-gateway
+    depends_on:
+      auth-service:
+        condition: service_started
+      eureka-server:
+        condition: service_healthy
+      catalogue-service:
+        condition: service_started
+      ticket-service:
+        condition: service_started
+      payment-service:
+        condition: service_started
+    ports:
+      - "8080:8080"
+
+
+volumes:
+  mongo_data:

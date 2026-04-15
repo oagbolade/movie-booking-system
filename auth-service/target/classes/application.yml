@@ -1,0 +1,21 @@
+server:
+  port: 8081
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/authdb
+
+  eureka:
+    client:
+      service-url:
+        defaultZone: http://eureka-server:8761/eureka/
+      register-with-eureka: true
+      fetch-registry: true
+
+  jwt:
+    secret: "your-very-secure-secret-key-which-is-long"
+    expiration: 900000 # 15 minutes
+
+  kafka:
+    bootstrap-servers: kafka:9092
