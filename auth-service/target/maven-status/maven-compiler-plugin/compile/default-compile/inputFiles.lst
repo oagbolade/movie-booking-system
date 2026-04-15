@@ -12,6 +12,6 @@
 /Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/event/consumer/KafkaProducerConfig.java
 /Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/service/JwtService.java
 /Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/dto/LoginRequest.java
-/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/config/MongockConfig.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/exception/GlobalExceptionHandler.java
 /Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/security/JwtAuthenticationFilter.java
 /Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/migration/V2__seed_admin.java

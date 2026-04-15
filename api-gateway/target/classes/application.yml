@@ -2,17 +2,19 @@ server:
   port: 8080
 
 jwt:
-  secret: "your-very-secure-secret-key"
+  secret: "your-very-secure-secret-key-which-is-long"
 
 spring:
   application:
     name: api-gateway
-
+  data:
     redis:
       host: redis
       port: 6379
 
-    eureka:
-      client:
-        service-url:
-          defaultZone: http://eureka-server:8761/eureka/
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true

@@ -27,10 +27,10 @@ public class RouteConfig {
                 .route("auth-service", r -> r.path("/api/auth/**")
                         .uri("lb://auth-service"))
                 .route("catalogue-service", r -> r.path("/api/catalogue/**")
-                        .filters(f -> f.requestRateLimiter(config -> config
-                                .setRateLimiter(redisRateLimiter)
-                                .setKeyResolver(ipKeyResolver)
-                        ))
+//                        .filters(f -> f.requestRateLimiter(config -> config
+//                                .setRateLimiter(redisRateLimiter)
+//                                .setKeyResolver(ipKeyResolver)
+//                        ))
                         .uri("lb://catalogue-service"))
                 .route("ticket-service", r -> r.path("/api/tickets/**")
                         .uri("lb://ticket-service"))

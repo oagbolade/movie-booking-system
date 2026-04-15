@@ -2,9 +2,15 @@ FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
-COPY . .
+# COPY FULL MONOREPO (THIS IS THE KEY FIX)
+COPY .. .
 
-RUN mvn clean install -DskipTests -pl notification-service
+# Build everything (Maven reactor)
+RUN mvn clean install -DskipTests
+
+WORKDIR /app/notification-service
+
+RUN mvn package -DskipTests
 
 FROM eclipse-temurin:17-jdk
 

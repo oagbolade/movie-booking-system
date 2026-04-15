@@ -2,7 +2,7 @@ FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY .. .
 
 RUN mvn clean install -DskipTests
 
@@ -16,6 +16,6 @@ WORKDIR /app
 
 COPY --from=builder /app/ticket-service/target/*.jar app.jar
 
-EXPOSE 8082
+EXPOSE 8084
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -2,10 +2,13 @@ FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY .. .
 
-RUN mvn clean install -DskipTests -pl common
-RUN mvn clean install -DskipTests -pl auth-service
+RUN mvn clean install -DskipTests
+
+WORKDIR /app/auth-service
+
+RUN mvn package -DskipTests
 
 FROM eclipse-temurin:17-jdk
 

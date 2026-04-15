@@ -1,0 +1,118 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.maven.metadata.xml
+
+# IDE - IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+*.swp
+*.swo
+
+# IDE - Eclipse
+.classpath
+.project
+.settings/
+.c9/
+*.launch
+
+# IDE - VS Code
+.vscode/
+*.code-workspace
+
+# IDE - NetBeans
+nbproject/
+.nb-gradle/
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.local
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+.gradle/
+
+# Local development
+*.pid
+*.seed
+*.pid.lock
+node_modules/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.h2.db
+mongo/data/
+
+# Docker
+.dockerignore
+
+# Build artifacts
+dist/
+build/
+
+# Runtime
+logs/
+*.log
+
+# Spring Boot
+application-dev.yml
+application-prod.yml
+application-test.yml
+
+# Kubernetes
+*.yaml
+!docker-compose.yml
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+*.cer
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# IntelliJ specific
+.idea/*
+!.idea/runConfigurations/
+!.idea/inspectionProfiles/
+
+# Maven wrapper
+.mvn/
+mvnw
+mvnw.cmd
+
+# Package Files
+*.exe
+*.msi
+
+# Miscellaneous
+.history/
+.cache/
+*.orig
+.venv/
+venv/
+.python-version
+
