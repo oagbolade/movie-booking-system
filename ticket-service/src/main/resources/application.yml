@@ -45,3 +45,18 @@ kafka:
 logging:
   level:
     root: INFO
+
+resilience4j:
+  ratelimiter:
+    instances:
+      ticketBookingLimiter:
+        limit-for-period: 10
+        limit-refresh-period: 1m
+        timeout-duration: 0
+  retry:
+    instances:
+      ticketNotificationRetry:
+        max-attempts: 3
+        wait-duration: 500ms
+        retry-exceptions:
+          - java.lang.RuntimeException

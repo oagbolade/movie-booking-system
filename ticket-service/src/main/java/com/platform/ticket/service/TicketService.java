@@ -5,7 +5,9 @@ import com.platform.ticket.model.Ticket;
 import com.platform.ticket.repository.TicketRepository;
 import com.platform.ticket.event.producer.TicketEventProducer;
 import com.platform.common.event.NotificationRequestedEvent;
-
+import com.platform.ticket.exception.TooManyRequestsException;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class TicketService {
     private final TicketRepository repository;
     private final TicketEventProducer producer;
 
+    @RateLimiter(name = "ticketBookingLimiter", fallbackMethod = "bookTicketRateLimited")
     public TicketResponse bookTicket(TicketRequest request) {
 
         // ✅ IDEMPOTENCY CHECK
@@ -55,5 +58,9 @@ public class TicketService {
                 .userId(ticket.getUserId())
                 .movieId(ticket.getMovieId())
                 .build();
+    }
+
+    private TicketResponse bookTicketRateLimited(TicketRequest request, RequestNotPermitted ex) {
+        throw new TooManyRequestsException("Too many ticket booking attempts. Please try again later.");
     }
 }

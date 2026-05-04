@@ -3,10 +3,13 @@ package com.platform.auth.service;
 import com.platform.auth.dto.AuthResponse;
 import com.platform.auth.dto.LoginRequest;
 import com.platform.auth.dto.RegisterRequest;
+import com.platform.auth.exception.TooManyRequestsException;
 import com.platform.common.event.NotificationRequestedEvent;
 import com.platform.auth.event.producer.NotificationProducer;
 import com.platform.auth.model.User;
 import com.platform.auth.repository.UserRepository;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final NotificationProducer notificationProducer;
 
+    @RateLimiter(name = "registerLimiter", fallbackMethod = "registerRateLimited")
     public AuthResponse register(RegisterRequest request) {
 
         User user = User.builder()
@@ -49,6 +53,7 @@ public class AuthService {
         return generateTokens(user);
     }
 
+    @RateLimiter(name = "loginLimiter", fallbackMethod = "loginRateLimited")
     public AuthResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
@@ -61,6 +66,7 @@ public class AuthService {
         return generateTokens(user);
     }
 
+    @RateLimiter(name = "refreshLimiter", fallbackMethod = "refreshRateLimited")
     public AuthResponse refreshToken(String refreshToken) {
 
         User user = userRepository.findAll().stream()
@@ -73,6 +79,18 @@ public class AuthService {
         }
 
         return generateTokens(user); // rotation
+    }
+
+    private AuthResponse registerRateLimited(RegisterRequest request, RequestNotPermitted ex) {
+        throw new TooManyRequestsException("Too many registration attempts. Please try again later.");
+    }
+
+    private AuthResponse loginRateLimited(LoginRequest request, RequestNotPermitted ex) {
+        throw new TooManyRequestsException("Too many login attempts. Please try again later.");
+    }
+
+    private AuthResponse refreshRateLimited(String refreshToken, RequestNotPermitted ex) {
+        throw new TooManyRequestsException("Too many token refresh attempts. Please try again later.");
     }
 
     private AuthResponse generateTokens(User user) {

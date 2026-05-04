@@ -17,6 +17,9 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class JwtAuthenticationFilter implements WebFilter {
 
+    public static final String AUTHENTICATED_USER_ATTR = "authenticatedUser";
+    public static final String AUTHENTICATED_USER_HEADER = "X-Authenticated-User";
+
     @Value("${jwt.secret}")
     private String secret;
 
@@ -48,8 +51,15 @@ public class JwtAuthenticationFilter implements WebFilter {
                     .parseClaimsJws(token)
                     .getBody();
 
-            // You can attach user info to headers here if needed
-            return chain.filter(exchange);
+            String authenticatedUser = claims.getSubject();
+            exchange.getAttributes().put(AUTHENTICATED_USER_ATTR, authenticatedUser);
+
+            ServerWebExchange enrichedExchange = exchange.mutate()
+                    .request(request -> request.headers(headers ->
+                            headers.set(AUTHENTICATED_USER_HEADER, authenticatedUser)))
+                    .build();
+
+            return chain.filter(enrichedExchange);
 
         } catch (Exception e) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);

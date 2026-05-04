@@ -15,3 +15,4 @@
 /Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/exception/GlobalExceptionHandler.java
 /Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/security/JwtAuthenticationFilter.java
 /Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/migration/V2__seed_admin.java
+/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/auth-service/src/main/java/com/platform/auth/exception/TooManyRequestsException.java

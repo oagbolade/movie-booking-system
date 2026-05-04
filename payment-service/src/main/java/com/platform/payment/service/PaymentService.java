@@ -6,7 +6,9 @@ import com.platform.payment.repository.PaymentRepository;
 import com.platform.payment.service.provider.PaymentProvider;
 import com.platform.payment.event.producer.PaymentEventProducer;
 import com.platform.common.event.NotificationRequestedEvent;
-
+import com.platform.payment.exception.TooManyRequestsException;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class PaymentService {
     private final PaymentProvider provider;
     private final PaymentEventProducer producer;
 
+    @RateLimiter(name = "paymentLimiter", fallbackMethod = "processRateLimited")
     public PaymentResponse process(PaymentRequest request) {
 
         boolean success = provider.processPayment(request.getAmount());
@@ -48,5 +51,9 @@ public class PaymentService {
                 .id(saved.getId())
                 .status(saved.getStatus())
                 .build();
+    }
+
+    private PaymentResponse processRateLimited(PaymentRequest request, RequestNotPermitted ex) {
+        throw new TooManyRequestsException("Too many payment attempts. Please try again later.");
     }
 }

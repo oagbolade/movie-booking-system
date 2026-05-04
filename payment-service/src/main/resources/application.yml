@@ -48,3 +48,39 @@ kafka:
 logging:
   level:
     root: INFO
+
+resilience4j:
+  ratelimiter:
+    instances:
+      paymentLimiter:
+        limit-for-period: 5
+        limit-refresh-period: 1m
+        timeout-duration: 0
+  circuitbreaker:
+    instances:
+      paymentProviderCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+      paymentNotificationCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+  retry:
+    instances:
+      paymentProviderRetry:
+        max-attempts: 3
+        wait-duration: 1s
+        retry-exceptions:
+          - java.lang.RuntimeException
+      paymentNotificationRetry:
+        max-attempts: 3
+        wait-duration: 500ms
+        retry-exceptions:
+          - java.lang.RuntimeException

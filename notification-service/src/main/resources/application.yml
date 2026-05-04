@@ -25,3 +25,42 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
 
+resilience4j:
+  ratelimiter:
+    instances:
+      emailNotificationLimiter:
+        limit-for-period: 20
+        limit-refresh-period: 1m
+        timeout-duration: 0
+      smsNotificationLimiter:
+        limit-for-period: 10
+        limit-refresh-period: 1m
+        timeout-duration: 0
+  circuitbreaker:
+    instances:
+      emailNotificationCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+      smsNotificationCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+  retry:
+    instances:
+      emailNotificationRetry:
+        max-attempts: 3
+        wait-duration: 1s
+        retry-exceptions:
+          - java.lang.RuntimeException
+      smsNotificationRetry:
+        max-attempts: 3
+        wait-duration: 1s
+        retry-exceptions:
+          - java.lang.RuntimeException

@@ -48,3 +48,11 @@ kafka:
 logging:
   level:
     root: INFO
+
+resilience4j:
+  ratelimiter:
+    instances:
+      paymentLimiter:
+        limit-for-period: 5
+        limit-refresh-period: 1m
+        timeout-duration: 0

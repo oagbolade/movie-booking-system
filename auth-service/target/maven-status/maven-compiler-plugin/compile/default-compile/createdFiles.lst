@@ -1,17 +1,2 @@
-com/platform/auth/dto/AuthResponse.class
-com/platform/auth/model/User$UserBuilder.class
-com/platform/auth/dto/LoginRequest.class
-com/platform/auth/repository/UserRepository.class
-com/platform/auth/dto/RegisterRequest.class
-com/platform/auth/service/AuthService.class
-com/platform/auth/event/consumer/KafkaProducerConfig.class
-com/platform/auth/model/User.class
 com/platform/auth/migration/V1__init_users.class
-com/platform/auth/controller/AuthController.class
-com/platform/auth/service/JwtService.class
-com/platform/auth/security/SecurityConfig.class
 com/platform/auth/AuthServiceApplication.class
-com/platform/auth/migration/V2__seed_admin.class
-com/platform/auth/security/JwtAuthenticationFilter.class
-com/platform/auth/exception/GlobalExceptionHandler.class
-com/platform/auth/event/producer/NotificationProducer.class
