@@ -1,7 +1,0 @@
-/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/notification-service/src/main/java/com/platform/notification/consumer/NotificationConsumer.java
-/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/notification-service/src/main/java/com/platform/notification/migration/V1__init_notifications.java
-/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/notification-service/src/main/java/com/platform/notification/NotificationServiceApplication.java
-/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/notification-service/src/main/java/com/platform/notification/service/EmailService.java
-/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/notification-service/src/main/java/com/platform/notification/provider/MailgunProvider.java
-/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/notification-service/src/main/java/com/platform/notification/service/SmsService.java
-/Users/oladayo.agbolade/Desktop/movie-ticket-booking-system/notification-service/src/main/java/com/platform/notification/provider/TwilioProvider.java

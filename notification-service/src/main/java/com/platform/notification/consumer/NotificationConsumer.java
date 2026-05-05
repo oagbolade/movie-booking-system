@@ -3,6 +3,7 @@ package com.platform.notification.consumer;
 import com.platform.common.event.NotificationRequestedEvent;
 import com.platform.notification.service.EmailService;
 import com.platform.notification.service.SmsService;
+import com.platform.notification.service.WhatsAppService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,18 +16,23 @@ public class NotificationConsumer {
 
     private final EmailService emailService;
     private final SmsService smsService;
+    private final WhatsAppService whatsAppService;
 
     @KafkaListener(topics = "notification.requested", groupId = "notification-service")
     public void consume(NotificationRequestedEvent event) {
         try {
             log.info("Received notification event for user: {}", event.getUserId());
 
-            if ("EMAIL".equals(event.getType()) || "BOTH".equals(event.getType())) {
+            if ("EMAIL".equals(event.getType()) || "ALL".equals(event.getType())) {
                 emailService.sendEmail(event.getEmail(), event.getMessage());
             }
 
-            if ("SMS".equals(event.getType()) || "BOTH".equals(event.getType())) {
+            if ("SMS".equals(event.getType()) || "ALL".equals(event.getType())) {
                 smsService.sendSms(event.getPhoneNumber(), event.getMessage());
+            }
+
+            if ("WHATSAPP".equals(event.getType()) || "ALL".equals(event.getType())) {
+                whatsAppService.sendWhatsAppMessage(event.getPhoneNumber(), event.getMessage());
             }
 
             log.info("Notification sent successfully for user: {}", event.getUserId());

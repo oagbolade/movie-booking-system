@@ -36,6 +36,10 @@ resilience4j:
         limit-for-period: 10
         limit-refresh-period: 1m
         timeout-duration: 0
+      whatsAppMessageNotificationLimiter:
+        limit-for-period: 10
+        limit-refresh-period: 1m
+        timeout-duration: 0
   circuitbreaker:
     instances:
       emailNotificationCircuitBreaker:
@@ -46,6 +50,13 @@ resilience4j:
         wait-duration-in-open-state: 30s
         permitted-number-of-calls-in-half-open-state: 3
       smsNotificationCircuitBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+      whatsAppMessageNotificationCircuitBreaker:
         sliding-window-type: COUNT_BASED
         sliding-window-size: 10
         minimum-number-of-calls: 5
@@ -64,3 +75,13 @@ resilience4j:
         wait-duration: 1s
         retry-exceptions:
           - java.lang.RuntimeException
+      whatsAppMessageNotificationRetry:
+        max-attempts: 3
+        wait-duration: 1s
+        retry-exceptions:
+          - java.lang.RuntimeException
+
+twilio:
+  phone: whatsapp:+14155238886
+  ACCOUNT_SID: AC71fb81e1ecec75a536d7658608befb69
+  AUTH_TOKEN: 75c0eea102cfbcfca71395ef82da92f5

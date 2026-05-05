@@ -69,6 +69,12 @@ public class RouteConfig {
                                 .setKeyResolver(userOrIpKeyResolver)
                         ))
                         .uri("lb://notification-service"))
+                .route("notification-whatsapp-webhook", r -> r.path("/whatsapp")
+                        .filters(f -> f.requestRateLimiter(config -> config
+                                .setRateLimiter(notificationRateLimiter)
+                                .setKeyResolver(ipKeyResolver)
+                        ))
+                        .uri("lb://notification-service"))
                 .build();
     }
 }

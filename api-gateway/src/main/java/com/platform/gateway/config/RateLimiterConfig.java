@@ -4,12 +4,14 @@ import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import reactor.core.publisher.Mono;
 
 @Configuration
 public class RateLimiterConfig {
 
     @Bean
+    @Primary
     public RedisRateLimiter authRateLimiter() {
         return new RedisRateLimiter(5, 10);
     }
@@ -40,6 +42,7 @@ public class RateLimiterConfig {
     }
 
     @Bean
+    @Primary
     public KeyResolver userOrIpKeyResolver() {
         return exchange -> Mono.justOrEmpty(
                         exchange.getAttribute(JwtAuthenticationFilter.AUTHENTICATED_USER_ATTR))
