@@ -83,4 +83,3 @@ resilience4j:
 
 twilio:
   phone: whatsapp:+14155238886
-
