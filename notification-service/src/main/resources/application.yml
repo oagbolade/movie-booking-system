@@ -83,5 +83,8 @@ resilience4j:
 
 twilio:
   phone: whatsapp:+14155238886
-  ACCOUNT_SID: AC71fb81e1ecec75a536d7658608befb69
-  AUTH_TOKEN: 75c0eea102cfbcfca71395ef82da92f5
+  account-sid: AC71fb81e1ecec75a536d7658608befb69
+  auth-token: 75c0eea102cfbcfca71395ef82da92f5
+mailgun:
+  sandbox-domain: sandbox67c258fd748c4e5d946cbaa0c4bd5b76.mailgun.org
+  api-sending-key: 698e2050e722f8300cd0df796547ab17-428c42a0-25e95712

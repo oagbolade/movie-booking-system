@@ -75,6 +75,12 @@ public class RouteConfig {
                                 .setKeyResolver(ipKeyResolver)
                         ))
                         .uri("lb://notification-service"))
+                .route("notification-mailgun-webhook", r -> r.path("/mailgun/email")
+                        .filters(f -> f.requestRateLimiter(config -> config
+                                .setRateLimiter(notificationRateLimiter)
+                                .setKeyResolver(ipKeyResolver)
+                        ))
+                        .uri("lb://notification-service"))
                 .build();
     }
 }

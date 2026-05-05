@@ -28,8 +28,8 @@ public class JwtAuthenticationFilter implements WebFilter {
 
         String path = exchange.getRequest().getURI().getPath();
 
-        // Allow auth endpoints
-        if (path.contains("/api/auth")) {
+        // Allow public endpoints that must be reachable without a bearer token.
+        if (isPublicPath(path)) {
             return chain.filter(exchange);
         }
 
@@ -65,5 +65,11 @@ public class JwtAuthenticationFilter implements WebFilter {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }
+    }
+
+    private boolean isPublicPath(String path) {
+        return path.startsWith("/api/auth")
+                || "/whatsapp".equals(path)
+                || "/mailgun/email".equals(path);
     }
 }

@@ -62,11 +62,17 @@ public class AuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
+        String phoneNumber = user.getPhoneNumber();
+
+        if(phoneNumber.isEmpty()){
+            // default phone number
+            phoneNumber = "+2348147471248";
+        }
 
         NotificationRequestedEvent event = NotificationRequestedEvent.builder()
                 .userId(user.getId())
                 .email(user.getEmail())
-                .phoneNumber("+2348147471248")
+                .phoneNumber(phoneNumber)
                 .type("ALL")
                 .message("Login Successful 🎉")
                 .build();

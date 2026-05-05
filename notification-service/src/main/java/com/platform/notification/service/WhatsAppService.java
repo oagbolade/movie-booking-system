@@ -22,13 +22,13 @@ public class WhatsAppService {
     @CircuitBreaker(name = "whatsAppMessageNotificationCircuitBreaker", fallbackMethod = "sendWhatsAppMessageCircuitBreakerFallback")
     @Retry(name = "whatsAppMessageNotificationRetry", fallbackMethod = "sendWhatsAppMessageRetryFallback")
     public void sendWhatsAppMessage(String phone, String message) {
-        Twilio.init(twilioConfig.getAccountSid(), twilioConfig.getAuthToken());
-
-        Message.creator(
-                new PhoneNumber(normalizeWhatsAppNumber(phone)),
-                new PhoneNumber(normalizeWhatsAppNumber(twilioConfig.getPhone())),
-                message
-        ).create();
+//        Twilio.init(twilioConfig.getAccountSid(), twilioConfig.getAuthToken());
+//
+//        Message.creator(
+//                new PhoneNumber(normalizeWhatsAppNumber(phone)),
+//                new PhoneNumber(normalizeWhatsAppNumber(twilioConfig.getPhone())),
+//                message
+//        ).create();
 
         log.info("Sent WhatsApp message to {}", phone);
     }
