@@ -83,5 +83,4 @@ resilience4j:
 
 twilio:
   phone: whatsapp:+14155238886
-  ACCOUNT_SID: AC71fb81e1ecec75a536d7658608befb69
 
